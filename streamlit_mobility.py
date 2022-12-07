@@ -26,5 +26,5 @@ plot_df = mode_filtered_df.set_index("date") \
 plt.style.use("fivethirtyeight")
 plt.xticks([])
 fig, ax = plt.subplots()
-ax = plot(plot_df)
+ax = plt.plot(plot_df)
 st.pyplot(fig)
