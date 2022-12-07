@@ -24,7 +24,8 @@ plot_df = mode_filtered_df.set_index("date") \
 .drop(columns = "transportation_type")
 
 plt.style.use("fivethirtyeight")
-plt.xticks([])
+
 fig, ax = plt.subplots()
 ax = plt.plot(plot_df)
+plt.xticks([])
 st.pyplot(fig)
