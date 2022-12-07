@@ -25,4 +25,5 @@ plot_df = mode_filtered_df.set_index("date") \
 
 plt.style.use("fivethirtyeight")
 plt.xticks([])
-st.write(plt.plot(plot_df))
+fig = plt.plot(plot_df)
+st.pyplot(fig)
