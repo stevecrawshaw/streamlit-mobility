@@ -4,6 +4,8 @@ import matplotlib.pyplot as plt
 
 mob_data = pd.read_csv("applemobilitytrends-2020-04-19.csv" )
 
+st.title("Mobility in the Time of the Plague")
+
 city = st.sidebar.selectbox("Select a City", ["London", "Paris"])
 
 mode = st.sidebar.selectbox("Select mode", ["driving", "walking"])
