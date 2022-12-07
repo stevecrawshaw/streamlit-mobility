@@ -1,0 +1,14 @@
+name: streamlit
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - numpy
+  - pandas
+  - plotnine
+  - seaborn
+  - altair
+  - polars
+  - streamlit
+prefix: /home/steve/miniconda3/envs/streamlit
