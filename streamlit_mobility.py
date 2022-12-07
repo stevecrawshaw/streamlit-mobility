@@ -10,10 +10,12 @@ region_city = list(mob_data['region'].unique())
 trans_type = list(mob_data['transportation_type'].unique())
 
 st.title("Mobility in the Time of the Plague")
-st.subheader(f'{trans_type} in {region_city}')
+
 city = st.sidebar.selectbox("Select a City", region_city)
 
 mode = st.sidebar.selectbox("Select mode", trans_type)
+
+st.subheader(f'{mode} in {city}')
 
 city_data = mob_data[mob_data["region"] == city] \
 .drop(columns = ["geo_type", "region"]) \
