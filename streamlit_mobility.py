@@ -4,11 +4,13 @@ import matplotlib.pyplot as plt
 
 mob_data = pd.read_csv("applemobilitytrends-2020-04-19.csv" )
 
-st.title("Mobility in the Time of the Plague")
+
 
 region_city = list(mob_data['region'].unique())
 trans_type = list(mob_data['transportation_type'].unique())
 
+st.title("Mobility in the Time of the Plague")
+st.subheader(f'{trans_type} in {region_city}')
 city = st.sidebar.selectbox("Select a City", region_city)
 
 mode = st.sidebar.selectbox("Select mode", trans_type)
