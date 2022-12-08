@@ -1,34 +1,39 @@
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
+import altair as alt
 
-mob_data = pd.read_csv("applemobilitytrends-2020-04-19.csv" )
+mob_data = pd.read_csv("city_mobility.csv" )
 
-st.title("Mobility in the Time of the Plague")
+cities = list(mob_data['city'].unique())
+modes = list(mob_data['transportation_type'].unique())
 
-region_city = list(mob_data['region'].unique())
-trans_type = list(mob_data['transportation_type'].unique())
+st.title("Mobility in the UK during COVID-19")
 
-city = st.sidebar.selectbox("Select a City", region_city)
+city = st.sidebar.selectbox("Select a City", cities)
 
-mode = st.sidebar.selectbox("Select mode", trans_type)
+mode = st.sidebar.selectbox("Select mode", modes)
 
-city_data = mob_data[mob_data["region"] == city] \
-.drop(columns = ["geo_type", "region"]) \
-.melt(id_vars = "transportation_type", var_name = "date", value_name = "flow")
+st.subheader(f'{mode} in {city}')
 
-city_data['date'] = pd.to_datetime(city_data['date'])
+mob_data['date'] = pd.to_datetime(mob_data['date'])
 
-# mode = "driving"
+mode_filtered_df = mob_data[(mob_data['transportation_type'] == mode) & (mob_data['city'] == city)]
 
-mode_filtered_df = city_data[city_data["transportation_type"] == mode]
+lines = (
+    alt.Chart(mode_filtered_df)
+    .mark_line()
+    .encode(x = "date", y="flow")
+)
 
-plot_df = mode_filtered_df.set_index("date") \
-.drop(columns = "transportation_type")
+lines.encoding.x.title = 'Date'
+lines.encoding.y.title = 'Normalised daily flow'
 
-plt.style.use("fivethirtyeight")
+xrule = (
+    alt.Chart()
+    .mark_rule(color="cyan", strokeWidth=2)
+    .encode(x=alt.datum(alt.DateTime(year=2020, month="March", date = 23)))
+)
 
-fig, ax = plt.subplots()
-ax = plt.plot(plot_df)
-plt.xticks([])
-st.pyplot(fig)
+mob_chart = lines + xrule
+
+mob_chart
